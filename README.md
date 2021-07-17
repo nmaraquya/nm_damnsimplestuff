@@ -1,2 +1,2 @@
-# somestuff
-Used for demonstrate some stuff to friends or any visitors!
+# damnsimplestuff
+Used for demonstrate some simple stuff for someone

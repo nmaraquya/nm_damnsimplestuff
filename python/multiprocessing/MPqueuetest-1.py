@@ -19,32 +19,34 @@ qu = multiprocessing.Queue()
 # IPIS: 0.00011744000000000001 seconds
 
 
-
 def senderProcess():
     print("Hello from sender")
-    i=0
-    sendlen=0
+    i = 0
+    sendlen = 0
     start = time.time()
     while i < pkts:
-        i+=1
+        i += 1
         pkt = os.urandom(1500)
-        sendlen+=sys.getsizeof(pkt)
+        sendlen += sys.getsizeof(pkt)
         qu.put(pkt)
         print("send qsize: "+str(qu.qsize()))
-    print("Sender spent time: "+str(time.time()-start)+"; sendrate: "+str((8*sendlen / (time.time()-start)/1e6))+" Mbps; IPIS = "+str(1/(pkts / (time.time()-start))))
+    print("Sender spent time: "+str(time.time()-start)+"; sendrate: "+str((8*sendlen /
+          (time.time()-start)/1e6))+" Mbps; IPIS = "+str(1/(pkts / (time.time()-start))))
     print("Got "+str(sendlen/1048576)+" MBytes; Goodbye from sender")
+
 
 def receiverProcess():
     print("Hello from receiver")
-    i=0
-    recvlen=0
+    i = 0
+    recvlen = 0
     start = time.time()
     while i < pkts:
-        i+=1
+        i += 1
         pkt = qu.get()
-        recvlen+=sys.getsizeof(pkt)
+        recvlen += sys.getsizeof(pkt)
         print("recv qsize: "+str(qu.qsize()))
-    print("Receiver spent time: "+str(time.time()-start)+"; recvrate: "+str((8*recvlen / (time.time()-start)/1e6))+" Mbps; IPIR = "+str(1/(pkts / (time.time()-start))))
+    print("Receiver spent time: "+str(time.time()-start)+"; recvrate: "+str((8*recvlen /
+          (time.time()-start)/1e6))+" Mbps; IPIR = "+str(1/(pkts / (time.time()-start))))
     print("Got "+str(recvlen/1048576)+" MBytes; Goodbye from receiver")
 
 
